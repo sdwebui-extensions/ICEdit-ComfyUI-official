@@ -16,11 +16,11 @@ We offer two methods for installing ICEdit-ComfyUI. You can choose the one you p
 
 Please first install [ComfyUI](https://github.com/comfyanonymous/ComfyUI/tree/master) with the following commands:
 
-```shell
+ ```shell
 	git clone https://github.com/comfyanonymous/ComfyUI.git
 	cd ComfyUI
 	pip install -r requirements.txt
-```
+ ```
 
 In addition, you need to install [ComfyUI_essentials](https://github.com/cubiq/ComfyUI_essentials) and [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use).
 
@@ -28,22 +28,22 @@ In addition, you need to install [ComfyUI_essentials](https://github.com/cubiq/C
 
  1. Install [ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager) with the following commands:
 
-```shell
+ ```shell
 	cd custom_nodes
 	git clone https://github.com/ltdrdata/ComfyUI-Manager comfyui-manager
-```
+ ```
 
  2. Launch ComfyUI:
 
-```shell
+ ```shell
 	cd ..	# Make sure you are in the ComfyUI root directory
 	python main.py
-```
+ ```
  3. Open the `ComfyUI Manager`, select `Install via Git URL`, input the URL:
 
-```shell
- 	https://github.com/hayd-zju/ICEdit-ComfyUI-official.git`
-```
+ ```shell
+	https://github.com/hayd-zju/ICEdit-ComfyUI-official.git`
+ ```
 
  4. Then install it and just wait a minute.
  ### Manual Installation
