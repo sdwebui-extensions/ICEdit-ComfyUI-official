@@ -65,4 +65,8 @@ In addition, you need to install [ComfyUI_essentials](https://github.com/cubiq/C
 
 	- [Flux.1-fill-dev](https://huggingface.co/black-forest-labs/flux.1-fill-dev).
 	- [ICEdit-normal-LoRA](https://huggingface.co/RiverZ/normal-lora/tree/main).
+<<<<<<< HEAD
  2. Use our workflow example in [example_workflow](https://github.com/hayd-zju/ICEdit-ComfyUI-official/tree/main/example_workflow): You can directly drag the JSON file onto the ComfyUI interface.
+=======
+ 2. Use our workflow example in [example_workflow](https://github.com/hayd-zju/ICEdit-ComfyUI-official/tree/main/example_workflow): You can directly drag the JSON file onto the ComfyUI interface.
+>>>>>>> 15935db (update jpg)
