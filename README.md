@@ -59,3 +59,10 @@ In addition, you need to install [ComfyUI_essentials](https://github.com/cubiq/C
 	cd ..	# Make sure you are in the ComfyUI root directory
 	python main.py
  ```
+
+ ## Usage
+ 1. Download Required Models: If you can connect to Huggingface, you don't need to download the weights. Otherwise, you need to download the weights to local.
+
+	- [Flux.1-fill-dev](https://huggingface.co/black-forest-labs/flux.1-fill-dev).
+	- [ICEdit-normal-LoRA](https://huggingface.co/RiverZ/normal-lora/tree/main).
+ 2. Use our workflow example in [example_workflow](https://github.com/hayd-zju/ICEdit-ComfyUI-official/tree/main/example_workflow): You can directly drag the JSON file onto the ComfyUI interface.
