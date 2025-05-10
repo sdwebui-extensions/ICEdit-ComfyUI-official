@@ -42,12 +42,15 @@ class DiptychCreate:
         files = [f for f in os.listdir(input_dir) if os.path.isfile(os.path.join(input_dir, f))]
         return {"required":
                     {"image": (sorted(files), {"image_upload": True})},
+                "optional": {
+                    "image_input": ("IMAGE",)
+                }
                 }
 
     CATEGORY = "In-context_Editing_Framework"
 
-    RETURN_TYPES = ("IMAGE", "MASK")
-    RETURN_NAMES = ("diptych","maskDiptych")
+    RETURN_TYPES = ("IMAGE", "MASK", "IMAGE")
+    RETURN_NAMES = ("diptych","maskDiptych", "original_image")
     FUNCTION = "create"
     
     #TODO:作为单独的节点
@@ -87,12 +90,17 @@ class DiptychCreate:
         height = max(height, 576) if height == FIXED_DIMENSION else height
 
         return width, height
-    def create(self, image):
-        image_path = folder_paths.get_annotated_filepath(image)
-
-        img = node_helpers.pillow(Image.open, image_path)
-        img = node_helpers.pillow(ImageOps.exif_transpose, img)
-
+    def create(self, image, image_input=None):
+        if image_input is not None:
+            # Convert tensor to PIL Image
+            i = 255. * image_input.cpu().numpy().squeeze()
+            img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
+            original_image = img.copy()
+        else:
+            image_path = folder_paths.get_annotated_filepath(image)
+            img = node_helpers.pillow(Image.open, image_path)
+            img = node_helpers.pillow(ImageOps.exif_transpose, img)
+            original_image = img.copy()
 
 
         # if img.mode == 'I':
@@ -124,15 +132,20 @@ class DiptychCreate:
 
         # 将 mask 转换为 PyTorch 张量，并添加批量维度和通道维度
         mask_tensor = torch.from_numpy(mask_array)[None, None, ...]
-        return (combined_image, mask_tensor)
+        original_image = np.array(original_image).astype(np.float32) / 255.0
+        original_image = torch.from_numpy(original_image)[None,]
+        return (combined_image, mask_tensor, original_image)
 
     @classmethod
-    def IS_CHANGED(s, image):
-        image_path = folder_paths.get_annotated_filepath(image)
-        m = hashlib.sha256()
-        with open(image_path, 'rb') as f:
-            m.update(f.read())
-        return m.digest().hex()
+    def IS_CHANGED(s, image, image_input=None):
+        if image_input is None:
+            image_path = folder_paths.get_annotated_filepath(image)
+            m = hashlib.sha256()
+            with open(image_path, 'rb') as f:
+                m.update(f.read())
+            return m.digest().hex()
+        else:
+            return hashlib.sha256(image_input.tobytes()).hexdigest()
 
     @classmethod
     def VALIDATE_INPUTS(s, image):
