@@ -11,4 +11,4 @@ Repository = "https://github.com/hayd-zju/ICEdit-ComfyUI-official"
 [tool.comfy]
 PublisherId = "hayd"
 DisplayName = "ICEdit"
-Icon = "https://github.com/hayd-zju/ICEdit-ComfyUI-official/blob/main/assets/logo.svg"
+Icon = "https://github.com/hayd-zju/ICEdit-ComfyUI-official/blob/main/assets/logo.png"
