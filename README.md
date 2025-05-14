@@ -1,4 +1,4 @@
-This repository provides the official ComfyUI workflow for [ICEdit](https://github.com/River-Zhang/ICEdit).
+![image](https://github.com/user-attachments/assets/e97ac0ff-ee0a-4e6e-95ea-c2fa5feb6b50)This repository provides the official ComfyUI workflow for [ICEdit](https://github.com/River-Zhang/ICEdit).
 # 🎨ComfyUI Workflow
 
 ![ICEF Workflow](assets/ICEF_workflow.png)
@@ -7,6 +7,7 @@ In addition to directly loading images using the DiptyCreate node, you can also 
 
 ## 🎆 News 
 
+- **[2025/5/14]** 🔥 With the help of the [official comfy-org](https://www.comfy.org/zh-cn/), we have integrated our ComfyUI nodes into [Comfy Registry](https://registry.comfy.org/nodes/ICEdit)! 
 - **[2025/5/9]** 🔥 We have released our **[official ComfyUI workflow](https://github.com/hayd-zju/ICEdit-ComfyUI-official/tree/main)**! 🚀 Check the repository and have a try!
 
 ## Installation
