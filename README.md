@@ -3,7 +3,7 @@ This repository provides the official ComfyUI workflow for [ICEdit](https://gith
 
 ![ICEF_workflow](https://github.com/hayd-zju/ICEdit-ComfyUI-official/blob/main/assets/ICEF_workflow.png)
 In addition to directly loading images using the DiptyCreate node, you can also input images that have been processed by other ComfyUI nodes. In this case, the image loaded by the DiptyCreate node will be ignored. However, the DiptyCreate node still needs to load an image to prevent errors caused by the absence of a loaded image.
-![ICEF_with_no_upscale_workflow](https://github.com/hayd-zju/ICEdit-ComfyUI-official/blob/main/assets/ICEF_workflow_with_image_input.png)
+[ICEF_workflow_with_image_input](https://github.com/judian17/ICEdit-ComfyUI-official/blob/image-IO/assets/ICEF_workflow_with_image_input.png)
 
 ## 🎆 News 
 
