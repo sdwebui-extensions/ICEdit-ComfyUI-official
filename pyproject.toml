@@ -1,5 +1,5 @@
 [project]
-name = "icedit-comfyui-official"
+name = "ICEdit"
 description = "This node pack provides the official ComfyUI workflow for ICEdit."
 version = "1.0.0"
 license = {file = "LICENSE"}
@@ -10,5 +10,5 @@ Repository = "https://github.com/hayd-zju/ICEdit-ComfyUI-official"
 
 [tool.comfy]
 PublisherId = "hayd"
-DisplayName = "ICEdit-ComfyUI-official"
-Icon = ""
+DisplayName = "ICEdit"
+Icon = "https://github.com/hayd-zju/ICEdit-ComfyUI-official/blob/main/assets/logo.svg"
