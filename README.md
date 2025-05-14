@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/e97ac0ff-ee0a-4e6e-95ea-c2fa5feb6b50)This repository provides the official ComfyUI workflow for [ICEdit](https://github.com/River-Zhang/ICEdit).
+This repository provides the official ComfyUI workflow for [ICEdit](https://github.com/River-Zhang/ICEdit).
 # 🎨ComfyUI Workflow
 
 ![ICEF Workflow](assets/ICEF_workflow.png)
