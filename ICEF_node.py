@@ -40,8 +40,9 @@ class DiptychCreate:
     def INPUT_TYPES(s):
         input_dir = folder_paths.get_input_directory()
         files = [f for f in os.listdir(input_dir) if os.path.isfile(os.path.join(input_dir, f))]
+        image_options = ["None"] + sorted(files)  # Add "None" as the first option
         return {"required":
-                    {"image": (sorted(files), {"image_upload": True})},
+                    {"image": (image_options, {"image_upload": True})}, # Use updated options
                 "optional": {
                     "image_input": ("IMAGE",)
                 }
@@ -91,16 +92,36 @@ class DiptychCreate:
 
         return width, height
     def create(self, image, image_input=None):
+        # Determine the source of the image
+        img_pil = None  # PIL Image object that will be processed
+        original_image_pil = None # PIL copy of the input image
+
         if image_input is not None:
-            # Convert tensor to PIL Image
+            # Use image_input if provided
             i = 255. * image_input.cpu().numpy().squeeze()
-            img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
-            original_image = img.copy()
-        else:
+            img_pil = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
+            original_image_pil = img_pil.copy()
+        elif image != "None":
+            # No image_input, use local file if 'image' is not "None"
+            # VALIDATE_INPUTS should have ensured 'image' is a valid path if not "None"
             image_path = folder_paths.get_annotated_filepath(image)
-            img = node_helpers.pillow(Image.open, image_path)
-            img = node_helpers.pillow(ImageOps.exif_transpose, img)
-            original_image = img.copy()
+            img_pil = node_helpers.pillow(Image.open, image_path)
+            img_pil = node_helpers.pillow(ImageOps.exif_transpose, img_pil)
+            original_image_pil = img_pil.copy()
+        else:
+            # No image_input AND 'image' is "None" -> No image source
+            raise ValueError("DiptychCreate: No image source. Connect 'image_input' or select a local file (cannot be 'None' if 'image_input' is not connected).")
+
+        # Ensure img_pil is loaded, though the logic above should guarantee it or raise an error
+        if img_pil is None:
+             # This should not be reached if the logic above is correct
+            raise RuntimeError("DiptychCreate: Internal error - image not loaded.")
+
+        # The rest of the function expects variables 'img' and 'original_image'
+        # 'img' is the PIL image to be processed (resized, etc.)
+        # 'original_image' is the PIL copy used later for tensor conversion
+        img = img_pil
+        original_image = original_image_pil
 
 
         # if img.mode == 'I':
@@ -138,20 +159,29 @@ class DiptychCreate:
 
     @classmethod
     def IS_CHANGED(s, image, image_input=None):
-        if image_input is None:
+        if image_input is not None:
+            # If image_input is provided, its change is the primary determinant
+            return hashlib.sha256(image_input.tobytes()).hexdigest()
+        elif image != "None":
+            # If image_input is None, and a local image is selected
             image_path = folder_paths.get_annotated_filepath(image)
             m = hashlib.sha256()
             with open(image_path, 'rb') as f:
                 m.update(f.read())
             return m.digest().hex()
         else:
-            return hashlib.sha256(image_input.tobytes()).hexdigest()
+            # image_input is None and image is "None"
+            # Return a consistent hash for the "None" state if no input image.
+            return "NONE_IMAGE_SELECTED_NO_INPUT_HASH" # Unique string for this state
 
     @classmethod
     def VALIDATE_INPUTS(s, image):
+        if image == "None":
+            # "None" is a valid selection from the dropdown.
+            # The 'create' method will handle logic if no actual image data is available.
+            return True
         if not folder_paths.exists_annotated_filepath(image):
             return "Invalid image file: {}".format(image)
-
         return True
     
 class ICEFConditioning:
